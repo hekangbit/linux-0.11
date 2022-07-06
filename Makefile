@@ -8,10 +8,10 @@ AS86	=as86 -0 -a
 LD86	=ld86 -0
 
 AS	=as
-LD	=ld -m elf_i386
+LD	=ld -m elf_i386 -e startup_32
 LDFLAGS	=-s -x -M
 CC	=gcc $(RAMDISK)
-CFLAGS	=-m32 -Wall -O -fstrength-reduce -fomit-frame-pointer
+CFLAGS	=-m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -fno-stack-protector
 CPP	=cpp -nostdinc -Iinclude
 
 #

@@ -1,10 +1,10 @@
 CC	=gcc
-CFLAGS	=-m32 -O -Wall -fstrength-reduce -fomit-frame-pointer \
+CFLAGS	=-m32 -O -Wall -fstrength-reduce -fomit-frame-pointer -fno-stack-protector \
 	-finline-functions -nostdinc -I../include
 AS	=as
 AR	=ar
 LD	=ld -m elf_i386
-CPP	=gcc -E -nostdinc -I../include
+CPP	=gcc -E -fno-stack-protector -nostdinc -I../include
 
 .c.o:
 	$(CC) $(CFLAGS) \
