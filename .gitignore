@@ -4,3 +4,6 @@
 boot/bootsect
 boot/setup
 kernel/chr_drv/keyboard.s
+Image
+tools/build
+tools/system
