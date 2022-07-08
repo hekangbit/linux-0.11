@@ -19,7 +19,10 @@ CPP	=cpp -nostdinc -Iinclude
 # This can be either FLOPPY, /dev/xxxx or empty, in which case the
 # default of /dev/hd6 is used by 'build'.
 #
-ROOT_DEV=/dev/hd6
+#ROOT_DEV=/dev/hd6
+#ROOT_DEV=/dev/hd1
+#ROOT_DEV=FLOPPY
+ROOT_DEV=HD1
 
 ARCHIVES=kernel/kernel.o mm/mm.o fs/fs.o
 DRIVERS =kernel/blk_drv/blk_drv.a kernel/chr_drv/chr_drv.a

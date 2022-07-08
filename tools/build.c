@@ -29,6 +29,9 @@
 #include <unistd.h>	/* contains read/write */
 #include <fcntl.h>
 
+#define MAJOR(a) (((unsigned)(a))>>8)
+#define MINOR(a) ((a)&0xff)
+
 #define MINIX_HEADER 32
 #define GCC_HEADER 1024
 
@@ -64,16 +67,19 @@ int main(int argc, char ** argv)
 	if ((argc != 4) && (argc != 5))
 		usage();
 	if (argc == 5) {
-		if (strcmp(argv[4], "FLOPPY")) {
+		if (0 == strcmp(argv[4], "FLOPPY")) {
+			major_root = 0;
+			minor_root = 0;
+		} else if (0 == strcmp(argv[4], "HD1")) {
+			major_root = 3;
+			minor_root = 1;
+		} else {
 			if (stat(argv[4], &sb)) {
 				perror(argv[4]);
 				die("Couldn't stat root device.");
 			}
 			major_root = MAJOR(sb.st_rdev);
 			minor_root = MINOR(sb.st_rdev);
-		} else {
-			major_root = 0;
-			minor_root = 0;
 		}
 	} else {
 		major_root = DEFAULT_MAJOR_ROOT;
@@ -155,14 +161,14 @@ int main(int argc, char ** argv)
 		die("Unable to open 'system'");
 	if (read(id,buf,GCC_HEADER) != GCC_HEADER)
 		die("Unable to read header of 'system'");
-	if (((long *) buf)[5] != 0)
-		die("Non-GCC header of 'system'");
+	// if (((long *) buf)[5] != 0)
+	// 	die("Non-GCC header of 'system'");
 	for (i=0 ; (c=read(id,buf,sizeof buf))>0 ; i+=c )
 		if (write(1,buf,c)!=c)
 			die("Write call failed");
 	close(id);
 	fprintf(stderr,"System is %d bytes.\n",i);
-	if (i > SYS_SIZE*16)
-		die("System is too big");
+	// if (i > SYS_SIZE*16)
+	// 	die("System is too big");
 	return(0);
 }
